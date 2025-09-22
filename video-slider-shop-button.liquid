@@ -1,0 +1,540 @@
+
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<div
+class="video-shop-button-outer section section--{{ section.settings.section_width }} spacing-style {% if section.settings.color_scheme != blank %}color-{{ section.settings.color_scheme }}{% endif %}"
+style="{% render 'spacing-padding', settings: section.settings %}"
+>
+<div class="video-shop-button-inner">
+<div class="video-wrapper">
+{%  for block in section.blocks %}
+     {% if block.type == 'video_slider' %}
+<div class="card">
+<div class="video">
+  {% if block.settings.video %}
+    {% assign poster_img = block.settings.poster_image  | image_url: width: block.settings.poster_image.width, height:block.settings.image.height %}
+    {{ block.settings.video | video_tag: controls: false, loop: true, muted: false, poster: poster_img }}
+  {% else %}
+    <video loop   
+      poster="{% if block.settings.poster_image %}{{ block.settings.poster_image | image_url }}{% else %}{{ 'default-poster.jpg' | asset_url }}{% endif %}">
+      <source src="https://www.pexels.com/download/video/7657449/" type="video/mp4">
+    </video>
+  {% endif %}
+</div>
+
+<div class="play-icon">
+    {% if block.settings.play_icon %}
+    {{ block.settings.play_icon }}
+    {% else %}
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="21" viewBox="0 0 18 21" fill="#000">
+                            <path d="M17.5491 11.3063C18.0161 11.0369 18.0161 10.363 17.5491 10.0936L1.4499 0.805608C0.983237 0.536376 0.400098 0.873175 0.400098 1.41194L0.400099 19.988C0.400099 20.5267 0.983238 20.8635 1.4499 20.5943L17.5491 11.3063Z" fill="#000"></path>
+                        </svg>
+                      {% endif %}
+</div>
+<div class="review-wrapper">
+<div class="star">
+{% if block.settings.star %}
+{{ block.settings.star }}
+{% else %}
+ <svg xmlns="http://www.w3.org/2000/svg" width="120" height="21" viewBox="0 0 120 21" fill="none">
+    <path d="M10.4762 0L12.8282 7.23887H20.4396L14.2819 11.7127L16.6339 18.9516L10.4762 14.4777L4.31844 18.9516L6.67049 11.7127L0.512741 7.23887H8.12414L10.4762 0Z" fill="#000"></path>
+    <path d="M35.2379 0L37.59 7.23887H45.2014L39.0436 11.7127L41.3957 18.9516L35.2379 14.4777L29.0802 18.9516L31.4322 11.7127L25.2745 7.23887H32.8859L35.2379 0Z" fill="#000"></path>
+    <path d="M60.0001 0L62.3522 7.23887H69.9636L63.8058 11.7127L66.1579 18.9516L60.0001 14.4777L53.8424 18.9516L56.1944 11.7127L50.0367 7.23887H57.6481L60.0001 0Z" fill="#000"></path>
+    <path d="M84.7621 0L87.1141 7.23887H94.7255L88.5678 11.7127L90.9198 18.9516L84.7621 14.4777L78.6043 18.9516L80.9564 11.7127L74.7986 7.23887H82.41L84.7621 0Z" fill="#000"></path>
+    <path d="M109.524 0L111.876 7.23887H119.487L113.329 11.7127L115.682 18.9516L109.524 14.4777L103.366 18.9516L105.718 11.7127L99.5603 7.23887H107.172L109.524 0Z" fill="#000"></path>
+</svg>
+{% endif %}
+</div>
+{% if block.settings.review_content %}
+<div class="content">
+{{ block.settings.review_content }}
+</div>
+{% endif %}
+<div class="image-name-wrapper">
+    {% if block.settings.image %}
+<div class="image">
+    {% if block.settings.image %}
+  {{ block.settings.image | image_url: width: block.settings.image.width, height:block.settings.image.height  | image_tag}}
+    {% else %}
+  <img width="20" height="20" src="https://cdn.shopify.com/s/files/1/0722/0019/2035/files/hp_review1_icon_554c5960-0e72-4e91-a306-96282d065488.png?v=1758353164">
+ {% endif %}
+        </div>
+        {%  endif %}
+        {% if block.settings.customer_name %}
+<div class="name">
+{{ block.settings.customer_name }}
+</div>
+{% endif %}
+</div>
+
+<div class="tag-wrapper">
+  <ul>
+    {% assign tag_list = block.settings.tags | split: ',' %}
+    {% for tag in tag_list %}
+        {%  if block.settings.tags  %}
+      <li><button class="tag">{{ tag | strip }}</button></li>
+      {%  endif %}
+    {% endfor %}
+  </ul>
+</div>
+
+</div>
+</div>
+{% endif %}
+{% endfor %}
+</div>
+<div class="vertical-line"></div>
+<div class="shop-button-wrapper">
+   
+{% for block in section.blocks %}
+     {% if block.type == 'shop_button' %}
+{% if block.settings.title != blank %}
+<div class="title"><h2>{{ block.settings.title }}</h2></div>    
+{% endif %}     
+
+{% if block.settings.button_text %}
+    <div class="shop-button" style="{% if block.settings.bg_type == 'color'  %}
+    background-color: {{ block.settings.button_color | default: '#fff' }};
+   {% elsif block.settings.bg_type == 'image' and block.settings.bg_image %}
+     background-image: url('{{ block.settings.bg_image | image_url }}');
+     background-size: cover;
+     background-position: center;
+     background-repeat: no-repeat;
+   {% endif %}"
+    >
+  
+<a style="text-align:{{ block.settings.text_alignment }};" href="{{ block.settings.button_link }}">
+<h2>{{ block.settings.button_text }}</h2>
+</a>
+
+    </div>
+{% endif %}
+
+{% endif %}
+{% endfor %}
+</div>
+</div>
+</div>
+<style>
+.video-shop-button-outer .video-shop-button-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    width: 100%;
+    box-sizing: border-box; 
+}
+.video-shop-button-outer .video-wrapper {
+  width: 50%; 
+}
+.video-shop-button-outer .card {
+  background-color:#F6F6F6;
+  border-radius: 5px;
+  position: relative; 
+}
+.video-shop-button-outer .card video {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    object-fit: cover;
+}
+.video-shop-button-outer .play-icon {
+    background: #ffffffc7;
+    width: 58.8px;
+    height: 58.8px;
+    position: absolute;
+    top: 32%;
+    left: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 30px;
+}
+.video-shop-button-outer .review-wrapper {
+  padding: 15px;
+  font-family: {{ settings.font_body | default: 'Arial, sans-serif' }};
+  font-size: 14px;
+  color: {{ settings.text_color | default: '#000' }};
+}
+
+.video-shop-button-outer .review-wrapper .star {
+  margin-bottom: 5px;
+}
+
+.video-shop-button-outer .review-wrapper .content {
+  margin-bottom: 10px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.video-shop-button-outer .image-name-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0px 10px;
+}
+
+.video-shop-button-outer .image-name-wrapper .image img {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+}
+
+.video-shop-button-outer .image-name-wrapper .name {
+  font-weight: 600;
+  font-size: 13px;
+}
+.video-shop-button-outer .tag-wrapper ul {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    list-style: none;
+    padding-left: 0%;
+}
+.video-shop-button-outer .tag-wrapper ul li {
+    margin: 0px 0.4%;
+}
+.video-shop-button-outer .tag-wrapper .tag {
+  border-radius: 20px;
+  padding: 10px 20px;
+  border: 1px solid #A4A4A4;
+}
+.video-shop-button-outer .vertical-line {
+    width: 1px;
+    height: 100%;
+    background-color: #00000033;
+} 
+.video-shop-button-outer .shop-button-wrapper {
+  width: 40%; 
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.video-shop-button-outer .shop-button-wrapper .title {
+    align-self: flex-start;
+} 
+.video-shop-button-outer .shop-button-wrapper .title h2 {
+    font-weight: 400;
+}
+
+.video-shop-button-outer .shop-button {
+    width: 400px;
+    border-radius: 12px;
+    padding: 45px 15px;
+}
+.video-shop-button-outer .shop-button a {
+  text-decoration: none;
+  color:#fff;
+  display: block;
+  text-transform: capitalize;
+  text-decoration:underline;
+}
+.video-shop-button-outer .shop-button a h2 {
+    font-weight: 400;
+}
+.video-shop-button-outer .shop-button-wrapper .shop-button:last-child {
+  border: 2px solid #000;
+  border-radius:5px;
+  text-decoration:underline;
+}
+.video-shop-button-outer .shop-button-wrapper .shop-button:last-child a {
+    text-decoration-thickness: 2px;
+}
+.video-shop-button-outer .shop-button-wrapper .shop-button:last-child a h2 {
+  color:#000;
+  text-decoration-thickness: 3px;
+}
+.video-shop-button-outer .slick-track {
+    display: flex;
+}
+.video-shop-button-outer .slick-slide {
+    margin: 0px 5px;
+}
+.video-shop-button-outer .slick-dots {
+  bottom: -25px;
+}
+
+.video-shop-button-outer .slick-dots li button:before {
+  font-size: 10px;
+  color: #000;
+}
+
+/* Responsive */
+@media(max-width:767px) {
+ .video-shop-button-outer .video-shop-button-inner {
+    display: flex;
+    flex-wrap: wrap;
+}
+.video-shop-button-outer .video-wrapper {
+    width: 100%;
+}
+.video-shop-button-outer .shop-button-wrapper {
+    width: 100%;
+}
+.video-shop-button-outer .shop-button {
+    width: 300px;
+}
+.video-shop-button-outer .vertical-line {
+    display: none;
+}
+}
+
+@media(max-width:480px) {
+  .video-shop-button-outer .tag-wrapper .tag {
+    padding: 4px 10px;
+  }
+.video-shop-button-outer .shop-button {
+    padding: 30px 20px;
+}
+}
+
+</style>
+<script>
+$(document).ready(function() {
+  {% comment %} video play/pause on icon {% endcomment %}
+  $('.video-wrapper .play-icon').on('click', function(e) {
+    e.stopPropagation();
+
+    var $currentCard = $(this).closest('.card');
+    var currentVideo = $currentCard.find('video').get(0);
+
+    if (currentVideo) {
+      // Pause all other videos and show their play icons
+      $('.video-wrapper .card').not($currentCard).each(function() {
+        var video = $(this).find('video').get(0);
+        if (video && !video.paused) {
+          video.pause();
+          $(this).find('.play-icon').show();
+        }
+      });
+
+      // Play current video and hide its icon
+      currentVideo.play();
+      $(this).hide();
+    }
+  });
+
+  // Pause when clicking on video itself
+  $('.video-wrapper video').on('click', function(e) {
+    e.stopPropagation();
+    if (!this.paused) {
+      this.pause();
+      $(this).closest('.card').find('.play-icon').show();
+    }
+  });
+
+  {% comment %} video slider {% endcomment %}
+  var videoCount = $('.video-shop-button-outer .card').length;
+  if (videoCount > 1 && !$('.video-wrapper').hasClass('slick-initialized')) {
+    $('.video-shop-button-outer .video-wrapper').slick({
+      dots: false,
+      arrows:false,
+      infinite: true,
+      speed: 300,
+      slidesToShow: 2,
+      slidesToScroll: 1,
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1,
+            dots: false 
+          }
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1
+          }
+        }
+      ]
+    });
+  }
+});
+</script>
+
+
+{% schema %}
+{
+  "name": "Video Slider Shop Button",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:settings.width",
+      "options": [
+        {
+          "value": "page-width",
+          "label": "t:options.page"
+        },
+        {
+          "value": "full-width",
+          "label": "t:options.full"
+        }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+
+  "blocks": [
+    {
+      "type": "video_slider",
+      "name": "Video Card",
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video"
+        },
+        {
+          "type": "image_picker",
+          "id": "poster_image",
+          "label": "Poster image"
+        },
+        {
+          "type": "liquid",
+          "id": "play_icon",
+          "label": "Play Icon"
+        },
+        {
+          "type": "liquid",
+          "id": "star",
+          "label": "Star"
+        },
+        {
+          "type": "richtext",
+          "id": "review_content",
+          "label": "Review Content",
+          "default":"<p>I get compliments every time I go out with Goda compared to my other perfume. You will not regret it!</p>"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "richtext",
+          "id": "customer_name",
+          "label": "Customer Name",
+          "default":"<p>Jane A | Verified Customer</p>"
+        },
+        {
+          "type": "textarea",
+          "id": "tags",
+          "label": "Tags (Comma Separated)",
+          "default": "Deep Hydration, Fragrance, Skin Care"
+        }
+      ]
+    },
+
+    {
+      "type": "shop_button",
+      "name": "Shop Button",
+      "settings": [
+        {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+        },
+       {
+  "type": "select",
+  "id": "bg_type",
+  "label": "Background Type",
+  "options": [
+    { "value": "color", "label": "Color" },
+    { "value": "image", "label": "Image" }
+  ],
+  "default": "image"
+},
+{
+  "type": "color",
+  "id": "button_color",
+  "label": "Color",
+  "default": "#000000"
+},
+{
+  "type": "image_picker",
+  "id": "bg_image",
+  "label": "Image"
+},
+{
+  "type": "select",
+  "id": "text_alignment",
+  "label": "Text Alignment",
+  "options": [
+    { "value": "left", "label": "Left" },
+    { "value": "center", "label": "Center" },
+    { "value": "right", "label": "Right" }
+  ],
+  "default": "center"
+},
+
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Shop Now"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link",
+          "default": "/collections/all"
+        },
+     
+    
+      ]
+    }       
+
+  ],
+
+  "presets": [
+    {
+      "name": "Video Slider Shop Button"
+    }
+  ]
+}
+{% endschema %}
+

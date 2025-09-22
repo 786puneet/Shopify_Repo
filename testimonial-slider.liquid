@@ -1,0 +1,495 @@
+
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<div
+class="section section--{{ section.settings.section_width }} spacing-style {% if section.settings.color_scheme != blank %}color-{{ section.settings.color_scheme }}{% endif %}"
+style="{% render 'spacing-padding', settings: section.settings %}"
+>
+<div class="testimonial-slider-inner">
+<div class="header-section">
+{% if section.settings.title  %}
+<div class="title">
+<h2>{{ section.settings.title }}</h2>
+</div>
+{% endif %}
+<div class="star-text-wrapper">
+<div class="star">
+{% if section.settings.star %}
+{{ section.settings.star }}
+{% else %}
+<svg xmlns="http://www.w3.org/2000/svg" width="93" height="18" viewBox="0 0 93 18" fill="none">
+<path d="M8.78019 0.96875L10.5834 6.51855H16.4188L11.6979 9.94851L13.5011 15.4983L8.78019 12.0683L4.05925 15.4983L5.86249 9.94851L1.14155 6.51855H6.97695L8.78019 0.96875Z" fill="black"></path>
+<path d="M27.7643 0.96875L29.5676 6.51855H35.403L30.682 9.94851L32.4853 15.4983L27.7643 12.0683L23.0434 15.4983L24.8466 9.94851L20.1257 6.51855H25.9611L27.7643 0.96875Z" fill="black"></path>
+<path d="M46.7485 0.96875L48.5517 6.51855H54.3871L49.6662 9.94851L51.4694 15.4983L46.7485 12.0683L42.0275 15.4983L43.8307 9.94851L39.1098 6.51855H44.9452L46.7485 0.96875Z" fill="black"></path>
+<path d="M65.7326 0.96875L67.5358 6.51855H73.3712L68.6503 9.94851L70.4535 15.4983L65.7326 12.0683L61.0116 15.4983L62.8149 9.94851L58.0939 6.51855H63.9293L65.7326 0.96875Z" fill="black"></path>
+<path d="M84.7169 0.96875L86.5202 6.51855H92.3556L87.6346 9.94851L89.4379 15.4983L84.7169 12.0683L79.996 15.4983L81.7992 9.94851L77.0783 6.51855H82.9137L84.7169 0.96875Z" fill="black"></path>
+</svg>
+{% endif %}
+</div>
+{% if section.settings.text %}
+<div class="text">
+{{ section.settings.text }}
+</div>
+{% endif %}
+</div>
+</div>
+<div class="testimonial-card-wrapper">
+{% for block in section.blocks %}
+{%  if block.type == "testimonial_card" %}
+<div class="card">
+{% if block.settings.card_image %}
+<div class="image">
+{{ block.settings.card_image | image_url: width: block.settings.card_image.width, height:block.settings.card_image.height | image_tag  }}
+</div>
+{% endif  %}
+<div class="star">
+{% if block.settings.star %}
+{{ block.settings.star }}
+{% else %}
+<svg xmlns="http://www.w3.org/2000/svg" width="92" height="17" viewBox="0 0 92 17" fill="none">
+<path d="M8.03175 0.518066L9.83499 6.06787H15.6704L10.9494 9.49783L12.7527 15.0476L8.03175 11.6177L3.3108 15.0476L5.11404 9.49783L0.393102 6.06787H6.22851L8.03175 0.518066Z" fill="black"></path>
+<path d="M27.0158 0.518066L28.819 6.06787H34.6544L29.9335 9.49783L31.7367 15.0476L27.0158 11.6177L22.2948 15.0476L24.0981 9.49783L19.3771 6.06787H25.2125L27.0158 0.518066Z" fill="black"></path>
+<path d="M46 0.518066L47.8032 6.06787H53.6387L48.9177 9.49783L50.7209 15.0476L46 11.6177L41.2791 15.0476L43.0823 9.49783L38.3614 6.06787H44.1968L46 0.518066Z" fill="black"></path>
+<path d="M64.9841 0.518066L66.7874 6.06787H72.6228L67.9018 9.49783L69.7051 15.0476L64.9841 11.6177L60.2632 15.0476L62.0664 9.49783L57.3455 6.06787H63.1809L64.9841 0.518066Z" fill="black"></path>
+<path d="M83.9683 0.518066L85.7715 6.06787H91.6069L86.886 9.49783L88.6892 15.0476L83.9683 11.6177L79.2473 15.0476L81.0506 9.49783L76.3296 6.06787H82.165L83.9683 0.518066Z" fill="black"></path>
+</svg>
+{% endif %}
+</div>
+{% if block.settings.review_text  %}
+<div class="review-text">
+{{ block.settings.review_text }}
+</div>
+{% endif %}
+{% if block.settings.verfication_icon or block.settings.customer %}
+<div class="image-name-wrapper">
+{% if block.settings.verfication_icon %}
+<div class="image">
+{{ block.settings.verfication_icon | image_url: width: block.settings.verfication_icon.width, height:block.settings.verfication_icon.height | image_tag  }}
+</div>
+{% endif %}
+{% if block.settings.verfication_icon %}
+<div class="name">
+{{ block.settings.customer }}
+</div>
+{% endif %}
+</div>
+{% endif %}
+
+<div class="tag-wrapper">
+<ul>
+{% assign tag_list = block.settings.tags | split: ',' %}
+{% for tag in tag_list %}
+{%  if block.settings.tags  %}
+<li><button class="tag">{{ tag | strip }}</button></li>
+{%  endif %}
+{% endfor %}
+</ul>
+</div>
+<div class="product-wrapper">
+{% if product.featured_image %}
+<div class="image">
+{{ product.featured_image }}
+</div>
+{% endif %}
+{%  if product.title or product.description %}
+<div class="details">
+{% if product.title %}
+<div class="title">{{  product.title }}</div>
+{% endif %}
+
+{% if product.description %}
+<div class="description">
+{{ product.description }}
+</div>
+{%  endif %}
+</div>
+{% endif %}
+<div class="add-to-cart">
+<a href="/product/cart">
+{{ block.settings.cart_icon | image_url: width: block.settings.cart_icon.width, height:block.settings.cart_icon.height | image_tag }}
+</a>  
+</div>
+</div>
+</div>
+{% endif %}
+{% endfor %}
+</div>
+</div>
+</div>
+
+<style>
+/* Main Section Styling */
+.testimonial-slider-inner {
+max-width: 1200px;
+margin: 0 auto;
+padding: 50px 20px;
+}
+
+/* Header Section */
+.header-section {
+text-align: center;
+margin-bottom: 40px;
+}
+
+.header-section .title h2 {
+font-size: 40px;
+font-weight: 500;
+margin-bottom: 10px;
+}
+
+.star-text-wrapper {
+display: flex;
+justify-content: center;
+align-items: center;
+margin-bottom: 10px;
+}
+
+.star-text-wrapper .star svg {
+width: 100px; /* Adjust as needed */
+height: auto;
+margin-right: 10px;
+}
+
+.star-text-wrapper .text {
+font-size: 16px;
+color: #555;
+}
+
+/* Testimonial Cards */
+.testimonial-card-wrapper {
+display: flex;
+justify-content: center;
+gap: 20px;
+}
+
+.testimonial-card-wrapper .card {
+background-color: #fff;
+border: 1px solid #e0e0e0;
+border-radius: 8px;
+overflow: hidden;
+width: calc(25% - 15px); /* Four cards in a row with spacing */
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+display: flex;
+flex-direction: column;
+}
+
+.testimonial-card-wrapper .card .image img {
+width: 100%;
+height: auto;
+display: block;
+}
+
+.testimonial-card-wrapper .card .star svg {
+margin: 15px;
+width: 100px; /* Adjust as needed */
+height: auto;
+}
+
+.testimonial-card-wrapper .card .review-text {
+padding: 0 15px;
+font-size: 15px;
+line-height: 1.5;
+color: #333;
+margin-bottom: 15px;
+min-height: 120px; /* Ensure consistent card height */
+}
+
+/* Customer Name and Verification */
+.image-name-wrapper {
+display: flex;
+align-items: center;
+padding: 0 15px;
+margin-bottom: 15px;
+}
+
+.image-name-wrapper .image img {
+width: 20px;
+height: 20px;
+margin-right: 5px;
+}
+
+.image-name-wrapper .name {
+font-size: 14px;
+font-weight: 600;
+color: #000;
+}
+
+/* Tags */
+.tag-wrapper ul {
+list-style: none;
+padding: 0 15px;
+margin: 0 0 15px 0;
+display: flex;
+flex-wrap: wrap;
+gap: 5px;
+}
+
+.tag-wrapper ul li button.tag {
+background-color: #f0f0f0;
+border: 1px solid #ccc;
+border-radius: 20px;
+padding: 5px 12px;
+font-size: 12px;
+color: #555;
+cursor: pointer;
+}
+
+/* Product Details */
+.product-wrapper {
+display: flex;
+align-items: center;
+padding: 15px;
+border-top: 1px solid #e0e0e0;
+}
+
+.product-wrapper .image {
+width: 50px;
+height: 50px;
+margin-right: 10px;
+}
+.product-wrapper .image img {
+width: 100%;
+height: 100%;
+object-fit: contain;
+}
+
+.product-wrapper .details {
+flex-grow: 1;
+}
+
+.product-wrapper .details .title {
+font-size: 14px;
+font-weight: 600;
+margin-bottom: 2px;
+}
+
+.product-wrapper .details .description {
+font-size: 12px;
+color: #777;
+}
+
+.product-wrapper .add-to-cart img {
+width: 24px;
+height: 24px;
+}
+
+/* Slick Slider Customization */
+.testimonial-slider-inner .slick-dots {
+bottom: -40px;
+}
+
+.testimonial-slider-inner .slick-dots li button:before {
+font-size: 12px;
+color: #ccc;
+}
+
+.testimonial-slider-inner .slick-dots li.slick-active button:before {
+color: #000;
+}
+
+.testimonial-slider-inner .slick-prev,
+.testimonial-slider-inner .slick-next {
+width: 40px;
+height: 40px;
+z-index: 10;
+background-color: #fff;
+border: 1px solid #ccc;
+border-radius: 50%;
+box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.testimonial-slider-inner .slick-prev:before,
+.testimonial-slider-inner .slick-next:before {
+font-size: 20px;
+color: #000;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+.testimonial-card-wrapper .card {
+  width: calc(33.33% - 15px);
+}
+}
+
+@media (max-width: 768px) {
+.testimonial-card-wrapper {
+  flex-direction: column;
+  align-items: center;
+}
+
+.testimonial-card-wrapper .card {
+  width: 90%;
+  margin-bottom: 20px;
+}
+}
+
+@media (max-width: 480px) {
+.header-section .title h2 {
+  font-size: 30px;
+}
+.testimonial-card-wrapper .card {
+  width: 100%;
+}
+}
+</style>
+<script>
+$('.testimonial-card-wrapper').slick({
+dots: true,
+arrows:true,
+infinite: true,
+speed: 300,
+slidesToShow: 4,
+slidesToScroll: 1,
+responsive: [
+{
+breakpoint: 1024,
+settings: {
+slidesToShow: 4,
+slidesToScroll: 1,
+infinite: true,
+dots: true
+}
+},
+{
+breakpoint: 600,
+settings: {
+slidesToShow: 1,
+slidesToScroll: 1
+}
+},
+{
+breakpoint: 480,
+settings: {
+slidesToShow: 1,
+slidesToScroll: 1
+}
+}
+// You can unslick at a given breakpoint now by adding:
+// settings: "unslick"
+// instead of a settings object
+]
+});
+</script>
+{% schema %}
+{
+"name": "Testimonial Slider",
+"settings": [
+{
+"type": "color_scheme",
+"id": "color_scheme",
+"label": "t:settings.color_scheme",
+"default": "scheme-1"
+},
+{
+"type": "select",
+"id": "section_width",
+"label": "t:settings.width",
+"options": [
+{
+"value": "page-width",
+"label": "t:options.page"
+},
+{
+"value": "full-width",
+"label": "t:options.full"
+}
+],
+"default": "page-width"
+},
+{
+"type": "header",
+"content": "Header Content"
+},
+{
+"type": "liquid",
+"id": "star",
+"label": "Star"
+},
+{
+"type": "text",
+"id": "text",
+"label": "Text"
+},
+{
+"type": "text",
+"id": "title",
+"label": "Title"
+},
+{
+"type": "header",
+"content": "t:content.padding"
+},
+{
+"type": "range",
+"id": "padding-block-start",
+"label": "t:settings.top",
+"min": 0,
+"max": 100,
+"step": 1,
+"unit": "px",
+"default": 0
+},
+{
+"type": "range",
+"id": "padding-block-end",
+"label": "t:settings.bottom",
+"min": 0,
+"max": 100,
+"step": 1,
+"unit": "px",
+"default": 0
+}
+],
+
+"blocks": [
+{
+"type": "testimonial_card",
+"name": "Testimonial Card",
+"settings": [
+{
+"type": "image_picker",
+"id": "card_image",
+"label": "Image"
+},
+{
+"type": "liquid",
+"id": "star",
+"label": "Star"
+},
+{
+"type": "richtext",
+"id": "review_text",
+"label": "Review Text"
+},
+{
+"type": "image_picker",
+"id": "verfication_icon",
+"label": "Verification Icon"
+},
+{
+"type": "richtext",
+"id": "customer",
+"label": "Customer Name"
+},
+{
+"type": "textarea",
+"id": "tags",
+"label": "Tags (Comma Separated)",
+"default": "Deep Hydration, Fragrance, Skin Care"
+},
+{
+"type": "image_picker",
+"id": "cart_icon",
+"label": "Cart Image"
+}
+]
+}
+],
+
+"presets": [
+{
+"name": "Testimonial Slider"
+}
+]
+}
+{% endschema %}

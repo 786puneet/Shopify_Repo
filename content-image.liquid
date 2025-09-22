@@ -1,0 +1,334 @@
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<div
+class="content-video-outer section section--{{ section.settings.section_width }} spacing-style {% if section.settings.color_scheme != blank %}color-{{ section.settings.color_scheme }}{% endif %}"
+style="{% render 'spacing-padding', settings: section.settings %}"
+>
+<div class="content-video-inner">
+{% for block in section.blocks %}
+{% if block.type == 'content_column' %}
+<div class="header-section">
+{% if block.settings.title %}
+<div class="title"><h3>{{ block.settings.title }}</h3></div>
+{% endif %}
+{% if block.settings.content %}
+<div class="text">{{ block.settings.content }}</div>
+{% endif %}
+</div>
+{% endif %}
+{% endfor %}
+
+<div class="content-image-wrapper">
+{% for block in section.blocks %}
+{% if block.type == 'content_column' %}
+<div class="content">
+<div class="progress-bar-wrapper">
+{% comment %} progress_bar_1 {% endcomment %}
+{% if block.settings.progress_range %}
+<div class="progress">
+<div class="progress_bar" style="width:{{ block.settings.progress_range }}%;">
+<p>{{ block.settings.progress_bar_value }}X</p>
+</div>
+<label>{{ block.settings.progress_bar_title }}</label>
+</div>
+{% endif %}
+{% comment %} progress_bar_2 {% endcomment %}
+{% if block.settings.progress_range_2 %}
+<div class="progress">
+<div class="progress_bar_2" style="width:{{ block.settings.progress_range_2 }}%;">
+<p>{{ block.settings.progress_bar_value_2 }}X</p>
+</div>
+<label>{{ block.settings.progress_bar_title_2 }}</label>
+</div>
+{% endif %}
+{% comment %} progress_bar_3 {% endcomment %}
+{% if block.settings.progress_range_3 %}
+<div class="progress">
+<div class="progress_bar_3" style="width:{{ block.settings.progress_range_3 }}%;">
+<p>{{ block.settings.progress_bar_value_3 }}X</p>
+</div>
+<label>{{ block.settings.progress_bar_title_3 }}</label>
+</div>
+{% endif %}
+</div>
+<div class="horizontal"></div>
+{% if block.settings.bottom_text %}
+<div class="bottom-text">{{ block.settings.bottom_text }}</div>
+{% endif %}
+</div>
+{% endif %}
+{% endfor %}
+
+{% for block in section.blocks %}
+{% if block.type == 'image_column' %}
+<div class="gif-image">
+<div class="image">
+{% if block.settings.gif_image %}
+{{ block.settings.gif_image | image_url: width: block.settings.gif_image.width, height:block.settings.gif_image.height | image_tag }}
+{% else %}
+<img width="552" height="552" src="https://cdn.shopify.com/s/files/1/0722/0019/2035/files/S10.webp?v=1758386023" alt="gif Image">
+{% endif %}
+</div>
+</div>
+{% endif %}
+{% endfor %}
+</div>
+</div>
+</div>
+
+
+<style>
+.content-video-outer .content-video-inner {
+width: 100%;
+}
+.content-video-outer .header-section {
+padding: 60px 0px 0px 0px;
+width: 50%;
+}
+.content-video-outer .content-image-wrapper {
+
+display: flex;
+justify-content: space-between;
+}
+.content-video-outer .content-video-inner .content {
+width:50%;
+margin-right: 30px;
+}
+
+.content-video-outer .content-video-inner .gif-image {
+width:50%;
+}
+
+.content-video-outer .content-video-inner .title h3 {
+margin-bottom: 20px;
+}
+
+.content-video-outer .content-video-inner .text {
+margin: 0 0 40px 0;
+}
+
+.content-video-outer .progress-bar-wrapper .progress {
+display: flex;
+align-items: center;
+margin-bottom: 20px;
+}
+
+.content-video-outer .progress-bar-wrapper .progress p {
+color: white;
+font-weight: 600;
+} 
+.content-video-outer .progress-bar-wrapper .progress label {
+margin-left: 20px;
+}
+.content-video-outer .progress_bar {
+background: linear-gradient(180deg, #000 0%, #353535 50.48%, #9D9D9D 100%);  
+min-height:70px;
+justify-content: center;
+align-items: center;
+display: flex;
+}
+
+.content-video-outer .progress_bar_2 {
+background: linear-gradient(180deg, #000 0%, #353535 50.48%, #9D9D9D 100%);
+min-height:70px;
+justify-content: center;
+align-items: center;
+display: flex;
+}
+.content-video-outer .progress_bar_3 {
+background: linear-gradient(180deg, #7A1414 0%, #9A2727 50.48%, #B50F0F 100%);
+min-height: 70px;
+justify-content: center;
+align-items: center;
+display: flex;
+}
+.content-video-outer .horizontal {
+width: 100%;
+height: 1.3px;
+background-color: #986d1d33; 
+}
+.content-video-outer .bottom-text {
+margin-top:5%;
+text-align: center;
+}
+@media(max-width:767px) {
+.content-video-outer .content-image-wrapper {
+display: flex;
+flex-wrap: wrap-reverse;
+}
+}
+</style>
+{% schema %}
+{
+"name": "Content Image",
+"settings": [
+{
+"type": "color_scheme",
+"id": "color_scheme",
+"label": "t:settings.color_scheme",
+"default": "scheme-1"
+},
+{
+"type": "select",
+"id": "section_width",
+"label": "t:settings.width",
+"options": [
+{
+"value": "page-width",
+"label": "t:options.page"
+},
+{
+"value": "full-width",
+"label": "t:options.full"
+}
+],
+"default": "page-width"
+},
+{
+"type": "header",
+"content": "t:content.padding"
+},
+{
+"type": "range",
+"id": "padding-block-start",
+"label": "t:settings.top",
+"min": 0,
+"max": 100,
+"step": 1,
+"unit": "px",
+"default": 0
+},
+{
+"type": "range",
+"id": "padding-block-end",
+"label": "t:settings.bottom",
+"min": 0,
+"max": 100,
+"step": 1,
+"unit": "px",
+"default": 0
+}
+],
+"blocks": [
+{
+"type": "content_column",
+"name": "Content Column",
+"limit": 1,
+"settings": [
+{
+"type": "text",
+"id": "title",
+"label": "Title",
+"default":"The Science Of Attraction"
+},
+{
+"type": "richtext",
+"id": "content",
+"label": "Content",
+"default":"<p>Most perfumes fade fast, feel greasy, or just don’t get noticed. Goda synergize with your smell to create your very own signature scent.</p   >"
+},
+{
+"type": "header",
+"content": "Progress Bar 1"
+},
+{
+"type": "range",
+"id": "progress_range",
+"label": "Progress Range",
+"min": 0,
+"max": 100,
+"step": 1,
+"unit": "%",
+"default": 20
+},
+{
+"type": "text",
+"id": "progress_bar_value",
+"label": "Progress Bar Value",
+"default":"1"
+},
+{
+"type": "text",
+"id": "progress_bar_title",
+"label": "Progress Bar Title",
+"default":"Knock-off Brands"
+},
+{
+"type": "header",
+"content": "Progress Bar 2"
+},
+{
+"type": "range",
+"id": "progress_range_2",
+"label": "Progress Range",
+"min": 0,
+"max": 100,
+"step": 1,
+"unit": "%",
+"default": 20
+},
+{
+"type": "text",
+"id": "progress_bar_value_2",
+"label": "Progress Bar Value",
+"default":"1.5"
+},
+{
+"type": "text",
+"id": "progress_bar_title_2",
+"label": "Progress Bar Title",
+"default":"Knock-off Brands"
+},
+{
+"type": "header",
+"content": "Progress Bar 3"
+},
+{
+"type": "range",
+"id": "progress_range_3",
+"label": "Progress Range",
+"min": 0,
+"max": 100,
+"step": 1,
+"unit": "%",
+"default": 20
+},
+{
+"type": "text",
+"id": "progress_bar_value_3",
+"label": "Progress Bar Value",
+"default":"3",
+},
+{
+"type": "text",
+"id": "progress_bar_title_3",
+"label": "Progress Bar Title",
+"default":"Knock-off Brands"
+},
+{
+"type": "text",
+"id": "bottom_text",
+"label": "Bottom Text",
+"default":"3X More Potent Compared To Other Scents"
+},
+]
+},
+{
+"type": "image_column",
+"name": "image Column",
+"limit": 1,
+"settings": [
+{
+"type": "image_picker",
+"label": "Image",
+"id": "gif_image"
+}
+]
+}
+],
+"presets": [
+{
+"name": "Content Image",
+}
+]
+}
+{% endschema %}
