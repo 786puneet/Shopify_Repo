@@ -1,0 +1,129 @@
+
+<script src="https://cdn.anychart.com/releases/8.11.1/js/anychart-core.min.js"></script>
+<script src="https://cdn.anychart.com/releases/8.11.1/js/anychart-pie.min.js"></script>
+
+
+{% comment %} <div id="container"></div> {% endcomment %}
+{% comment %} <script>
+anychart.onDocumentReady(function () {
+// add the data
+let data = anychart.data.set([
+["purchase price", 54],
+["development cost", 19.9],
+["finance cost", 3.8],
+["miscellaneous", 1.9],
+["profit", 19],
+["project management fees", 1.4]
+]);
+// create a pie chart with the data
+let chart = anychart.pie(data);
+// set the chart title
+// set container id for the chart
+chart.container("container");
+// initiate chart drawing
+chart.draw();
+});
+</script> {% endcomment %}
+<div id="container" style="width: 100%; height: 400px;"></div>
+
+<script>
+anychart.onDocumentReady(function () {
+// Build data array with label, value, and color per slice
+let data = anychart.data.set([
+{% for slice in section.blocks %}
+{ x: {{ slice.settings.label | json }}, value: Number({{ slice.settings.value | json }}), fill: {{ slice.settings.color | json }} }{% unless forloop.last %},{% endunless %}
+{% endfor %}
+]);
+// Create Pie Chart
+let chart = anychart.pie(data);
+
+// Set container
+chart.container("container");
+
+// Draw chart
+chart.draw();
+
+{% comment %} // Debug
+{% for slice in section.blocks %}
+console.log("Slice: " + {{ slice.settings.label | json }} + 
+" Value: " + {{ slice.settings.value | json }} +
+" Color: " + {{ slice.settings.color | json }});
+{% endfor %} {% endcomment %}
+
+});
+</script>
+
+
+
+<style>
+
+div#container {
+width: 100%;
+height: 80vh;
+}
+
+html, body { 
+width: 100%; 
+height: 100%; 
+margin: 0; 
+padding: 0; 
+background: url("https://cdn.shopify.com/s/files/1/0897/1491/7719/files/Copy_of_Blue_Gradient_Modern_Webite_Design_Service_Instagram_Post_2.jpg?v=1758260693");
+background-size: cover;  /* makes it responsive */
+} 
+
+</style>
+{% schema %}
+{
+"name": "Pie Chart",
+"settings": [
+{
+"type": "checkbox",
+"id": "topoffset",
+"label": "Top Offset",
+"default": false
+}
+],
+"blocks": [
+{
+"type": "slice",
+"name": "Slice",
+"settings": [
+{
+"type": "text",
+"id": "label",
+"label": "Slice Label"
+},
+{
+"type": "range",
+"id": "value",
+"label": "Slice Value",
+"min": 1,
+"max": 100,
+"step": 1,
+"default": 25
+},
+{
+"type": "color",
+"id": "color",
+"label": "Slice Color",
+"default": "#ff0000"
+}
+]
+}
+],
+"presets": [
+{
+"name": "Pie Chart",
+"category": "Collection",
+"blocks": [
+{ "type": "slice" },
+{ "type": "slice" },
+{ "type": "slice" },
+{ "type": "slice" },
+{ "type": "slice" },
+{ "type": "slice" }
+]
+}
+]
+}
+{% endschema %}
